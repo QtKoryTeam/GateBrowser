@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>browser_ui</class>
+ <widget class="QMainWindow" name="browser_ui">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>545</width>
+    <height>437</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>browser_ui</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#centralWidget
+{
+	font: 13pt &quot;Nanum Gothic&quot;;
+}
+
+QWidget
+{
+	background-color: rgb(255, 255, 255);
+}
+
+QWidget#m_BrowserBar
+{
+	background-color: rgb(207, 216, 220, 100);
+}
+
+QPushButton#m_GoBack, QPushButton#m_GoForward
+{
+	color: rgb(176, 190, 197);
+	background-color: rgb(255, 255, 255, 100);
+	border:0px solid;
+}
+
+QPushButton#m_GoBack::Pressed, QPushButton#m_GoForward::Pressed
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(176, 190, 197, 100);
+	border:0px solid;
+}
+
+QPushButton#m_GateBrowserIcon
+{
+	
+	background-color: rgb(255, 255, 255, 0);
+	image: url(:/Images/Resources/GateBrowser.png);
+	border:0px solid;
+}
+
+QWidget#m_Design_Tab
+{
+	background-color: rgb(120, 144, 156);
+}
+
+QLineEdit#m_UrlBar
+{
+	color: rgb(236, 239, 241);
+	background-color: rgb(176, 190, 197, 0);
+	border:0px solid;
+	font: 13pt &quot;Nanum Gothic&quot;;
+}
+
+QProgressBar#m_LoadBar
+{
+	color: rgb(255, 255, 255, 0);
+	background-color: rgb(176, 190, 197);
+	border:0px solid;
+}
+
+ QProgressBar::chunk#m_LoadBar {
+     background-color: rgb(96, 125, 139);
+ }</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="m_BrowserBar" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>551</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="m_GoBack">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>40</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="m_GoForward">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>0</y>
+       <width>40</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&gt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="m_DefaultKory">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>0</y>
+       <width>40</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">	image: url(:/Images/Resources/Kory.png);
+	background-color: rgb(255, 255, 255);
+	border:0px solid;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="m_GateBrowserIcon">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>0</y>
+       <width>40</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="m_UrlBar">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>0</y>
+       <width>220</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="placeholderText">
+      <string>GateBrowser 로 빠른 검색</string>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="m_LoadBar">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>0</y>
+       <width>220</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+    <zorder>m_GoBack</zorder>
+    <zorder>m_GoForward</zorder>
+    <zorder>m_DefaultKory</zorder>
+    <zorder>m_GateBrowserIcon</zorder>
+    <zorder>m_LoadBar</zorder>
+    <zorder>m_UrlBar</zorder>
+   </widget>
+   <widget class="QWidget" name="m_Design_Tab" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>40</y>
+      <width>551</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

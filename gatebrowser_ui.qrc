@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/Fonts">
+        <file>Resources/NanumGothic.otf</file>
+    </qresource>
+    <qresource prefix="/Images">
+        <file>Resources/Kory.png</file>
+        <file>Resources/Kory_Pressed.png</file>
+        <file>Resources/GateBrowser.png</file>
+    </qresource>
+    <qresource prefix="/StartPage">
+        <file>Resources/StartPage/Fast.png</file>
+        <file>Resources/StartPage/GateBrowser.png</file>
+        <file>Resources/StartPage/git_logo.png</file>
+        <file>Resources/StartPage/Kory.png</file>
+        <file>Resources/StartPage/Qt.png</file>
+        <file>Resources/StartPage/ReadMode.png</file>
+        <file>Resources/StartPage/StartPage.html</file>
+    </qresource>
+</RCC>
