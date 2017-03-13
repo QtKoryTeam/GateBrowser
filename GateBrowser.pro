@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui webengine webenginewidgets
+QT       += core gui webengine webenginewidgets texttospeech
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

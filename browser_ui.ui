@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>545</width>
-    <height>437</height>
+    <height>430</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>browser_ui</string>
+   <string>GateBrowser</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#centralWidget
@@ -29,14 +29,19 @@ QWidget#m_BrowserBar
 	background-color: rgb(207, 216, 220, 100);
 }
 
-QPushButton#m_GoBack, QPushButton#m_GoForward
+QPushButton
+{
+	font: 13pt &quot;Nanum Gothic&quot;;
+}
+
+QPushButton
 {
 	color: rgb(176, 190, 197);
 	background-color: rgb(255, 255, 255, 100);
 	border:0px solid;
 }
 
-QPushButton#m_GoBack::Pressed, QPushButton#m_GoForward::Pressed
+QPushButton::Pressed
 {
 	color: rgb(255, 255, 255);
 	background-color: rgb(176, 190, 197, 100);
@@ -73,16 +78,53 @@ QProgressBar#m_LoadBar
 
  QProgressBar::chunk#m_LoadBar {
      background-color: rgb(96, 125, 139);
- }</string>
+ }
+
+QPushButton#m_TabButton
+{
+	color: rgb(236, 239, 241);
+	background-color: rgb(120, 144, 156);
+	border:0px solid;
+	font: 13pt &quot;Nanum Gothic&quot;;
+}
+
+QPushButton#m_TabButton::Pressed
+{
+	color: rgb(236, 239, 241);
+	background-color: rgb(176, 190, 197);
+	border:0px solid;
+	font: 13pt &quot;Nanum Gothic&quot;;
+}
+
+QLabel#m_BrowserTitle
+{
+	color: rgb(255,255,255);
+	background-color: rgb(207, 216, 220, 100);
+	font: 13pt &quot;Nanum Gothic&quot;;
+}
+
+QPushButton#m_AddApps
+{
+	color: rgb(176, 190, 197);
+	background-color: rgb(207, 216, 220, 100);
+	border:0px solid;
+}
+
+QPushButton#m_AddApps::Pressed
+{
+	color: rgb(255,255,255);
+	background-color: rgb(176, 190, 197, 100);
+	border:0px solid;
+}</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="m_BrowserBar" native="true">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>551</width>
-      <height>40</height>
+      <x>60</x>
+      <y>30</y>
+      <width>485</width>
+      <height>30</height>
      </rect>
     </property>
     <widget class="QPushButton" name="m_GoBack">
@@ -90,8 +132,8 @@ QProgressBar#m_LoadBar
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>40</width>
-       <height>40</height>
+       <width>30</width>
+       <height>30</height>
       </rect>
      </property>
      <property name="text">
@@ -101,54 +143,23 @@ QProgressBar#m_LoadBar
     <widget class="QPushButton" name="m_GoForward">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>30</x>
        <y>0</y>
-       <width>40</width>
-       <height>40</height>
+       <width>30</width>
+       <height>30</height>
       </rect>
      </property>
      <property name="text">
       <string>&gt;</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="m_DefaultKory">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>0</y>
-       <width>40</width>
-       <height>40</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">	image: url(:/Images/Resources/Kory.png);
-	background-color: rgb(255, 255, 255);
-	border:0px solid;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="m_GateBrowserIcon">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>0</y>
-       <width>40</width>
-       <height>40</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="m_UrlBar">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>60</x>
        <y>0</y>
-       <width>220</width>
-       <height>40</height>
+       <width>280</width>
+       <height>30</height>
       </rect>
      </property>
      <property name="alignment">
@@ -161,34 +172,198 @@ QProgressBar#m_LoadBar
     <widget class="QProgressBar" name="m_LoadBar">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>60</x>
        <y>0</y>
-       <width>220</width>
-       <height>40</height>
+       <width>280</width>
+       <height>30</height>
       </rect>
      </property>
      <property name="value">
       <number>0</number>
      </property>
     </widget>
+    <widget class="QPushButton" name="m_TabBack">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>0</y>
+       <width>20</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="m_TabForward">
+     <property name="geometry">
+      <rect>
+       <x>465</x>
+       <y>0</y>
+       <width>20</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&gt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="m_TabButton">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>0</y>
+       <width>105</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
     <zorder>m_GoBack</zorder>
     <zorder>m_GoForward</zorder>
-    <zorder>m_DefaultKory</zorder>
-    <zorder>m_GateBrowserIcon</zorder>
     <zorder>m_LoadBar</zorder>
     <zorder>m_UrlBar</zorder>
+    <zorder>m_TabBack</zorder>
+    <zorder>m_TabForward</zorder>
+    <zorder>m_TabButton</zorder>
+    <zorder>m_DefaultKory</zorder>
+    <zorder>m_DefaultKory</zorder>
    </widget>
    <widget class="QWidget" name="m_Design_Tab" native="true">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>40</y>
+      <y>60</y>
       <width>551</width>
-      <height>16</height>
+      <height>10</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
+    </property>
+    <zorder>m_UrlBar</zorder>
+   </widget>
+   <widget class="QStackedWidget" name="m_Tab">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>69</y>
+      <width>545</width>
+      <height>361</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="m_DefaultPage"/>
+    <widget class="QWidget" name="m_SelectTabs"/>
+   </widget>
+   <widget class="QWidget" name="m_Bar" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>545</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="m_CloseButton">
+     <property name="geometry">
+      <rect>
+       <x>515</x>
+       <y>0</y>
+       <width>30</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#m_CloseButton::Pressed
+{
+	background-color: rgb(244, 67, 54);
+	color: rgb(255, 255, 255);
+}</string>
+     </property>
+     <property name="text">
+      <string>X</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="m_MinButton">
+     <property name="geometry">
+      <rect>
+       <x>485</x>
+       <y>0</y>
+       <width>30</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>-</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="m_FullButton">
+     <property name="geometry">
+      <rect>
+       <x>455</x>
+       <y>0</y>
+       <width>30</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>o</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="m_DefaultKory">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>0</y>
+       <width>30</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">	image: url(:/Images/Resources/Kory.png);
+	background-color: rgb(255, 255, 255);
+	border:0px solid;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="m_AddApps">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>0</y>
+       <width>30</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>+</string>
+     </property>
+    </widget>
+    <zorder>m_CloseButton</zorder>
+    <zorder>m_MinButton</zorder>
+    <zorder>m_FullButton</zorder>
+    <zorder>m_DefaultKory</zorder>
+    <zorder>m_TabBack_2</zorder>
+    <zorder>m_AddApps</zorder>
+   </widget>
+   <widget class="QPushButton" name="m_GateBrowserIcon">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>61</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
