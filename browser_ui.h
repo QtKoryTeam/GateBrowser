@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMouseEvent>
 #include <QCloseEvent>
+#include <QMouseEvent>
 #include <QList>
 #include <QtWebEngineWidgets>
 #include <QFontDatabase>
@@ -24,7 +25,6 @@ public:
 
     /* UI 처리 */
 
-    void createNewTab(QUrl url = QUrl()); // 새로운 탭을 생성
     void deleteTab(int m_TabNum); // 탭을 삭제
 
     void tabButtonManager(); // 탭 버튼 활성화 / 비활성화 여부를 결정
@@ -62,6 +62,7 @@ private slots:
     void tabGoBack(); // Tab 뒤로 이동
     void tabGoForward(); // Tab 뒤로 이동
     void setTabIndex(int index); // Tab Index 를 설정
+    void createNewTab(QString url = QString()); // 새로운 탭을 생성
 
     void on_m_TabBack_clicked();
 
@@ -81,6 +82,8 @@ private:
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void resizeEvent(QResizeEvent* event);
+
     int m_nMouseClick_X_Coordinate;
     int m_nMouseClick_Y_Coordinate;
 

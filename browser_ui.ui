@@ -228,8 +228,6 @@ QPushButton#m_AddApps::Pressed
     <zorder>m_TabBack</zorder>
     <zorder>m_TabForward</zorder>
     <zorder>m_TabButton</zorder>
-    <zorder>m_DefaultKory</zorder>
-    <zorder>m_DefaultKory</zorder>
    </widget>
    <widget class="QWidget" name="m_Design_Tab" native="true">
     <property name="geometry">
@@ -243,7 +241,6 @@ QPushButton#m_AddApps::Pressed
     <property name="styleSheet">
      <string notr="true"/>
     </property>
-    <zorder>m_UrlBar</zorder>
    </widget>
    <widget class="QStackedWidget" name="m_Tab">
     <property name="geometry">
@@ -346,12 +343,6 @@ QPushButton#m_AddApps::Pressed
       <string>+</string>
      </property>
     </widget>
-    <zorder>m_CloseButton</zorder>
-    <zorder>m_MinButton</zorder>
-    <zorder>m_FullButton</zorder>
-    <zorder>m_DefaultKory</zorder>
-    <zorder>m_TabBack_2</zorder>
-    <zorder>m_AddApps</zorder>
    </widget>
    <widget class="QPushButton" name="m_GateBrowserIcon">
     <property name="geometry">

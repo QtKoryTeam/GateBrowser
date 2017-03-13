@@ -19,9 +19,9 @@ browser_ui::browser_ui(QWidget *parent) :
 
     setFont(nanumgothic);
 
-    createNewTab(QUrl("qrc:/StartPage/Resources/StartPage/StartPage.html"));
+    createNewTab("qrc:/StartPage/Resources/StartPage/StartPage.html");
 
-    createNewTab(QUrl("http://naver.com"));
+    createNewTab("http://naver.com");
 }
 
 browser_ui::~browser_ui()
@@ -29,12 +29,38 @@ browser_ui::~browser_ui()
     delete ui;
 }
 
+void browser_ui::resizeEvent(QResizeEvent* event)
+{
+    if(!event->oldSize().isEmpty())
+    {
+    /* 크기도 같이 줄어들거나 커진다 */
+        ui->m_Bar->resize(ui->m_Bar->width() + (event->size().width() - event->oldSize().width()), ui->m_Bar->height());
+        ui->m_BrowserBar->resize(ui->m_BrowserBar->width() + (event->size().width() - event->oldSize().width()), ui->m_BrowserBar->height());
+
+        ui->m_LoadBar->resize(ui->m_LoadBar->width() + (event->size().width() - event->oldSize().width()), ui->m_LoadBar->height());
+        ui->m_UrlBar->resize(ui->m_UrlBar->width() + (event->size().width() - event->oldSize().width()), ui->m_UrlBar->height());
+
+        ui->m_Design_Tab->resize(ui->m_Design_Tab->width() + (event->size().width() - event->oldSize().width()), ui->m_Design_Tab->height());
+        ui->m_Tab->resize(ui->m_Tab->width() + (event->size().width() - event->oldSize().width()), ui->m_Tab->height() + (event->size().height() - event->oldSize().height()));
+
+    /* 위치만 이동한다 */
+
+        ui->m_CloseButton->move(event->size().width() - ui->m_CloseButton->width(), 0);
+        ui->m_MinButton->move(ui->m_CloseButton->x() - ui->m_MinButton->width(), 0);
+        ui->m_FullButton->move(ui->m_MinButton->x() - ui->m_FullButton->width(), 0);
+
+        ui->m_TabForward->move(event->size().width() - ui->m_TabForward->width() - ui->m_GateBrowserIcon->width(), ui->m_TabForward->y());
+        ui->m_TabButton->move(ui->m_TabForward->x() - ui->m_TabButton->width(), ui->m_TabButton->y());
+        ui->m_TabBack->move(ui->m_TabButton->x() - ui->m_TabBack->width(), ui->m_TabBack->y());
+    }
+}
+
 void browser_ui::on_m_DefaultKory_clicked()
 {
 
 }
 
-void browser_ui::createNewTab(QUrl url)
+void browser_ui::createNewTab(QString url)
 {
     QWebEngineView *view = new QWebEngineView();
 
@@ -44,12 +70,13 @@ void browser_ui::createNewTab(QUrl url)
 
     view->show();
 
-    view->load(url);
+    view->load(QUrl(url));
 
     //view->page()->profile()->setHttpUserAgent("AppleWebKit/537.36 (KHTML, like Gecko) GateBrowser/1.0.0 Chrome/53.0.2785.148 Safari/537.36");
 
     connect(view, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
     connect(view, SIGNAL(loadProgress(int)), this, SLOT(loadProgress(int)));
+    connect(view->page(), SIGNAL(linkHovered(QString)), this, SLOT(createNewTab(QString)));
     m_BrowserTabs.append(view);
 
     tabButtonManager();
