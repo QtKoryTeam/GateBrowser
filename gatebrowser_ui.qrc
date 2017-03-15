@@ -16,4 +16,7 @@
         <file>Resources/StartPage/ReadMode.png</file>
         <file>Resources/StartPage/StartPage.html</file>
     </qresource>
+    <qresource prefix="/ErrorPage">
+        <file>Resources/ErrorPage/CanNotLoaded.html</file>
+    </qresource>
 </RCC>

@@ -10,6 +10,12 @@
     <height>430</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>300</width>
+    <height>300</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>GateBrowser</string>
   </property>
@@ -252,9 +258,9 @@ QPushButton#m_AddApps::Pressed
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
-    <widget class="QWidget" name="m_DefaultPage"/>
+    <widget class="QWidget" name="m_Store"/>
     <widget class="QWidget" name="m_SelectTabs"/>
    </widget>
    <widget class="QWidget" name="m_Bar" native="true">

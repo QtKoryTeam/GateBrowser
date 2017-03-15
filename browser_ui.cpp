@@ -19,9 +19,22 @@ browser_ui::browser_ui(QWidget *parent) :
 
     setFont(nanumgothic);
 
-    createNewTab("qrc:/StartPage/Resources/StartPage/StartPage.html");
+    createNewTab(QUrl("qrc:/StartPage/Resources/StartPage/StartPage.html"));
 
-    createNewTab("http://naver.com");
+    createNewTab(QUrl("http://naver.com"));
+
+    bodyShadow->setBlurRadius(20.0);
+    bodyShadow->setDistance(6.0);
+    bodyShadow->setColor(QColor(0, 0, 0, 80));
+    setAutoFillBackground(true);
+    setGraphicsEffect(bodyShadow);
+
+#ifdef Q_OS_ANDROID
+    ui->m_CloseButton->hide();
+    ui->m_FullButton->hide();
+    ui->m_MinButton->hide();
+    showMaximized();
+#endif
 }
 
 browser_ui::~browser_ui()
@@ -43,6 +56,9 @@ void browser_ui::resizeEvent(QResizeEvent* event)
         ui->m_Design_Tab->resize(ui->m_Design_Tab->width() + (event->size().width() - event->oldSize().width()), ui->m_Design_Tab->height());
         ui->m_Tab->resize(ui->m_Tab->width() + (event->size().width() - event->oldSize().width()), ui->m_Tab->height() + (event->size().height() - event->oldSize().height()));
 
+        if(isCenterShow)
+            center->resize(size().width() / 3, size().height() - (ui->m_GateBrowserIcon->height() + ui->m_Design_Tab->height()) + 5);
+
     /* 위치만 이동한다 */
 
         ui->m_CloseButton->move(event->size().width() - ui->m_CloseButton->width(), 0);
@@ -57,12 +73,27 @@ void browser_ui::resizeEvent(QResizeEvent* event)
 
 void browser_ui::on_m_DefaultKory_clicked()
 {
-
+    if(!isKoryEnabled)
+    {
+        ui->m_DefaultKory->setStyleSheet("image: url(:/Images/Resources/Kory_Pressed.png);"
+                                        "background-color: rgb(255, 255, 255);"
+                                        "border:0px solid;");
+        isKoryEnabled = true;
+    }else{
+        ui->m_DefaultKory->setStyleSheet("image: url(:/Images/Resources/Kory.png);"
+                                        "background-color: rgb(255, 255, 255);"
+                                        "border:0px solid;");
+        isKoryEnabled = false;
+    }
 }
 
-void browser_ui::createNewTab(QString url)
+void browser_ui::createNewTab(QUrl url)
 {
-    QWebEngineView *view = new QWebEngineView();
+    #ifdef Q_OS_ANDROID
+        QWebView *view = new QWebView(); // Android
+    #else
+        QWebEngineView *view = new QWebEngineView(); // PC
+    #endif
 
     ui->m_Tab->setCurrentIndex(ui->m_Tab->addWidget(view));
 
@@ -70,13 +101,18 @@ void browser_ui::createNewTab(QString url)
 
     view->show();
 
-    view->load(QUrl(url));
+    view->load(url);
+
+    view->settings()->setAttribute(view->settings()->WebGLEnabled, true);
+    view->settings()->setAttribute(view->settings()->PluginsEnabled, true);
+    view->settings()->setAttribute(view->settings()->LocalStorageEnabled, true);
+    view->settings()->setAttribute(view->settings()->ErrorPageEnabled, false);
+    view->settings()->setAttribute(view->settings()->TouchIconsEnabled, true);
 
     //view->page()->profile()->setHttpUserAgent("AppleWebKit/537.36 (KHTML, like Gecko) GateBrowser/1.0.0 Chrome/53.0.2785.148 Safari/537.36");
 
     connect(view, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
     connect(view, SIGNAL(loadProgress(int)), this, SLOT(loadProgress(int)));
-    connect(view->page(), SIGNAL(linkHovered(QString)), this, SLOT(createNewTab(QString)));
     m_BrowserTabs.append(view);
 
     tabButtonManager();
@@ -121,6 +157,10 @@ void browser_ui::loadFinished(bool ok)
    {
        reloadUI();
    }else{
+       QFile file(":/ErrorPage/Resources/ErrorPage/CanNotLoaded.html");
+       file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+       m_BrowserTabs.at(ui->m_Tab->currentIndex() - 2)->setHtml(file.readAll());
        ui->m_TabButton->setText(tr("Can not Loaded"));
    }
 }
@@ -214,4 +254,50 @@ void browser_ui::on_m_GoBack_clicked()
 void browser_ui::on_m_GoForward_clicked()
 {
     m_BrowserTabs.at(ui->m_Tab->currentIndex() - 2)->forward();
+}
+
+void browser_ui::on_m_AddTab_clicked()
+{
+    createNewTab(QUrl("http://google.com"));
+}
+
+void browser_ui::showCenter()
+{
+     center = new QWidget(this);
+
+     if(!isCenterShow)
+     {
+
+     center->move(0, ui->m_GateBrowserIcon->height() + ui->m_Design_Tab->height() - 5);
+     center->resize(size().width() / 3, size().height() - (ui->m_GateBrowserIcon->height() + ui->m_Design_Tab->height()) + 5);
+     center->setStyleSheet("background-color: rgb(120, 144, 156);");
+     center->show();
+
+     QPropertyAnimation *animation = new QPropertyAnimation(center, "size");
+
+     animation->setDuration(300);
+     animation->setStartValue(QSize(0,0));
+     animation->setEndValue(center->size());
+
+     animation->start();
+
+     isCenterShow = true;
+
+     }else{
+         QPropertyAnimation *animation = new QPropertyAnimation(center, "size");
+
+         animation->setDuration(300);
+         animation->setStartValue(center->size());
+         animation->setEndValue(QSize(0,0));
+
+         animation->start();
+         center->hide();
+
+         isCenterShow = false;
+     }
+}
+
+void browser_ui::on_m_GateBrowserIcon_clicked()
+{
+    showCenter();
 }

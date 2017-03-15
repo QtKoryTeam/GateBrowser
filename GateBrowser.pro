@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui webengine webenginewidgets texttospeech
+QT       += core gui texttospeech
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,12 +24,36 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        browser_ui.cpp
+        browser_ui.cpp \
+    settings.cpp \
+    customshadoweffect.cpp
 
 HEADERS  += browser_ui.h \
-    config.h
+    config.h \
+    settings.h \
+    customshadoweffect.h
 
 FORMS    += browser_ui.ui
 
 RESOURCES += \
     gatebrowser_ui.qrc
+
+DISTFILES += \
+    Resources/GateBrowser.ico \
+    Resources/GateBrowser.icns
+
+win32 {
+    RC_ICONS = Resources/GateBrowser.ico
+}
+
+macx {
+    ICON = Resources/GateBrowser.icns
+}
+
+!android {
+QT += webengine webenginewidgets
+}
+
+android {
+QT += webview
+}

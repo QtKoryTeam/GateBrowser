@@ -6,10 +6,19 @@
 #include <QCloseEvent>
 #include <QMouseEvent>
 #include <QList>
-#include <QtWebEngineWidgets>
+
+#ifdef Q_OS_ANDROID
+    #include <QtWebView>
+#else
+    #include <QtWebEngineWidgets>
+#endif
+
 #include <QFontDatabase>
 #include <QDebug>
 #include <QTextToSpeech>
+#include <QPropertyAnimation>
+
+#include "customshadoweffect.h"
 
 namespace Ui {
 class browser_ui;
@@ -30,6 +39,8 @@ public:
     void tabButtonManager(); // 탭 버튼 활성화 / 비활성화 여부를 결정
 
     void showSettingPage(); // 설정창을 나오게 한다
+
+    void showCenter(); // 로고를 눌렀을시, 센터창이 나오게 한다
 
     enum MessageType
     {
@@ -62,7 +73,7 @@ private slots:
     void tabGoBack(); // Tab 뒤로 이동
     void tabGoForward(); // Tab 뒤로 이동
     void setTabIndex(int index); // Tab Index 를 설정
-    void createNewTab(QString url = QString()); // 새로운 탭을 생성
+    void createNewTab(QUrl url = QUrl()); // 새로운 탭을 생성
 
     void on_m_TabBack_clicked();
 
@@ -74,9 +85,19 @@ private slots:
 
     void on_m_GoForward_clicked();
 
+    void on_m_AddTab_clicked();
+
+    void on_m_GateBrowserIcon_clicked();
+
 private:
     Ui::browser_ui *ui;
-    QList<QWebEngineView*> m_BrowserTabs; // 탭 구성에 필요한 WebView
+
+#ifdef Q_OS_ANDROID
+    QtWebView::initialize();
+    //QList<QAndroidWebView*> m_BrowserTabs; // 탭 구성에 필요한 WebView (Android)
+#else
+    QList<QWebEngineView*> m_BrowserTabs; // 탭 구성에 필요한 WebView (PC)
+#endif
 
     /* From https://forum.qt.io/topic/34354/solved-frameless-window-dragging-issue/2 */
 
@@ -84,8 +105,15 @@ private:
     void mouseMoveEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent* event);
 
+    QWidget *center; // Center 창
+    CustomShadowEffect *bodyShadow = new CustomShadowEffect();
+
     int m_nMouseClick_X_Coordinate;
     int m_nMouseClick_Y_Coordinate;
+
+    bool isKoryEnabled = false;
+
+    bool isCenterShow = false;
 
     /* End */
 };
