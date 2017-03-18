@@ -23,12 +23,6 @@ browser_ui::browser_ui(QWidget *parent) :
 
     createNewTab(QUrl("http://naver.com"));
 
-    bodyShadow->setBlurRadius(20.0);
-    bodyShadow->setDistance(6.0);
-    bodyShadow->setColor(QColor(0, 0, 0, 80));
-    setAutoFillBackground(true);
-    setGraphicsEffect(bodyShadow);
-
 #ifdef Q_OS_ANDROID
     ui->m_CloseButton->hide();
     ui->m_FullButton->hide();
@@ -113,6 +107,7 @@ void browser_ui::createNewTab(QUrl url)
 
     connect(view, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
     connect(view, SIGNAL(loadProgress(int)), this, SLOT(loadProgress(int)));
+    connect(view, SIGNAL(iconChanged(QIcon)), this, SLOT(iconChanged(QIcon)));
     m_BrowserTabs.append(view);
 
     tabButtonManager();
@@ -163,6 +158,11 @@ void browser_ui::loadFinished(bool ok)
        m_BrowserTabs.at(ui->m_Tab->currentIndex() - 2)->setHtml(file.readAll());
        ui->m_TabButton->setText(tr("Can not Loaded"));
    }
+}
+
+void browser_ui::iconChanged(QIcon icon)
+{
+    ui->m_TabButton->setIcon(icon);
 }
 
 void browser_ui::loadProgress(int progress)
@@ -273,7 +273,7 @@ void browser_ui::showCenter()
      center->setStyleSheet("background-color: rgb(120, 144, 156);");
      center->show();
 
-     QPropertyAnimation *animation = new QPropertyAnimation(center, "size");
+     animation = new QPropertyAnimation(center, "size");
 
      animation->setDuration(300);
      animation->setStartValue(QSize(0,0));
@@ -284,7 +284,7 @@ void browser_ui::showCenter()
      isCenterShow = true;
 
      }else{
-         QPropertyAnimation *animation = new QPropertyAnimation(center, "size");
+         animation = new QPropertyAnimation(center, "size");
 
          animation->setDuration(300);
          animation->setStartValue(center->size());

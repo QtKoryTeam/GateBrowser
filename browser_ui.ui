@@ -162,11 +162,14 @@ QPushButton#m_AddApps::Pressed
     <widget class="QLineEdit" name="m_UrlBar">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>90</x>
        <y>0</y>
-       <width>280</width>
+       <width>250</width>
        <height>30</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -178,9 +181,9 @@ QPushButton#m_AddApps::Pressed
     <widget class="QProgressBar" name="m_LoadBar">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>90</x>
        <y>0</y>
-       <width>280</width>
+       <width>250</width>
        <height>30</height>
       </rect>
      </property>
@@ -227,6 +230,24 @@ QPushButton#m_AddApps::Pressed
       <string/>
      </property>
     </widget>
+    <widget class="QPushButton" name="m_DefaultKory">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>0</y>
+       <width>30</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">	image: url(:/Images/Resources/Kory.png);
+	background-color: rgb(255, 255, 255);
+	border:0px solid;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
     <zorder>m_GoBack</zorder>
     <zorder>m_GoForward</zorder>
     <zorder>m_LoadBar</zorder>
@@ -234,6 +255,7 @@ QPushButton#m_AddApps::Pressed
     <zorder>m_TabBack</zorder>
     <zorder>m_TabForward</zorder>
     <zorder>m_TabButton</zorder>
+    <zorder>m_DefaultKory</zorder>
    </widget>
    <widget class="QWidget" name="m_Design_Tab" native="true">
     <property name="geometry">
@@ -318,28 +340,10 @@ QPushButton#m_AddApps::Pressed
       <string>o</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="m_DefaultKory">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>0</y>
-       <width>30</width>
-       <height>30</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">	image: url(:/Images/Resources/Kory.png);
-	background-color: rgb(255, 255, 255);
-	border:0px solid;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
     <widget class="QPushButton" name="m_AddApps">
      <property name="geometry">
       <rect>
-       <x>90</x>
+       <x>60</x>
        <y>0</y>
        <width>30</width>
        <height>30</height>

@@ -18,7 +18,7 @@
 #include <QTextToSpeech>
 #include <QPropertyAnimation>
 
-#include "customshadoweffect.h"
+//#include "customshadoweffect.h"
 
 namespace Ui {
 class browser_ui;
@@ -66,6 +66,7 @@ private slots:
 
     void loadFinished(bool ok); // 로딩이 완료되면
     void loadProgress(int progress); // 프로그래스바
+    void iconChanged(QIcon icon); // 아이콘이 변경되면
     bool checkUrl(const QUrl &url);
 
     void reloadUI(); // UI 를 새로고침
@@ -106,7 +107,9 @@ private:
     void resizeEvent(QResizeEvent* event);
 
     QWidget *center; // Center 창
-    CustomShadowEffect *bodyShadow = new CustomShadowEffect();
+    //CustomShadowEffect *bodyShadow = new CustomShadowEffect();
+
+    QPropertyAnimation *animation;
 
     int m_nMouseClick_X_Coordinate;
     int m_nMouseClick_Y_Coordinate;

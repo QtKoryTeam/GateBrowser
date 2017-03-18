@@ -6,6 +6,7 @@
         <file>Resources/Kory.png</file>
         <file>Resources/Kory_Pressed.png</file>
         <file>Resources/GateBrowser.png</file>
+        <file>Resources/GateBrowser_Store.png</file>
     </qresource>
     <qresource prefix="/StartPage">
         <file>Resources/StartPage/Fast.png</file>
