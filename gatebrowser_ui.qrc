@@ -20,4 +20,8 @@
     <qresource prefix="/ErrorPage">
         <file>Resources/ErrorPage/CanNotLoaded.html</file>
     </qresource>
+    <qresource prefix="/Icons">
+        <file>Resources/GateBrowser.icns</file>
+        <file>Resources/GateBrowser.ico</file>
+    </qresource>
 </RCC>

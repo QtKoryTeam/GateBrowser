@@ -31,7 +31,8 @@ SOURCES += main.cpp\
 HEADERS  += browser_ui.h \
     config.h \
     settings.h \
-    customshadoweffect.h
+    customshadoweffect.h \
+    mywebpage.h
 
 FORMS    += browser_ui.ui
 

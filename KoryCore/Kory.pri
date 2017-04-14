@@ -13,14 +13,13 @@ TEMPLATE = app
 CONFIG += c++14
 
 SOURCES +=\
-    settings.cpp \
-    learn_manager.cpp
+    KoryCore/settings.cpp \
+    KoryCore/learn_manager.cpp
 
 HEADERS  += \
-    ui_script.h \
-    settings.h \
-    config.h \
-    learn_manager.h
+    KoryCore/settings.h \
+    KoryCore/config.h \
+    KoryCore/learn_manager.h
 
 FORMS    +=
 
@@ -37,5 +36,5 @@ include($$PWD/GoogleAPI/GoogleAPI.pri)
 include($$PWD/Calendar/Calendar.pri)
 
 RESOURCES += \
-    testresources.qrc
+    KoryCore/testresources.qrc
 

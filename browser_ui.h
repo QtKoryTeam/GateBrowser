@@ -18,6 +18,8 @@
 #include <QTextToSpeech>
 #include <QPropertyAnimation>
 
+#include "config.h"
+#include "mywebpage.h"
 //#include "customshadoweffect.h"
 
 namespace Ui {
@@ -41,6 +43,17 @@ public:
     void showSettingPage(); // 설정창을 나오게 한다
 
     void showCenter(); // 로고를 눌렀을시, 센터창이 나오게 한다
+
+    void closeCenter(); // 센터창을 닫는다
+
+    void showTabs(); // 탭 버튼을 클릭했을때 탭 선택창이 나오도록 한다
+
+    void closeTabs(); // 탭 선택창을 닫는다
+
+    void createNewTab(QUrl url = QUrl()); // 새로운 탭을 생성
+
+    void Navigate(); // 페이지로 로드
+    void optionalNavigate(QUrl url); // 옵션적인 페이지로 로드
 
     enum MessageType
     {
@@ -67,14 +80,16 @@ private slots:
     void loadFinished(bool ok); // 로딩이 완료되면
     void loadProgress(int progress); // 프로그래스바
     void iconChanged(QIcon icon); // 아이콘이 변경되면
+    void loadStarted(); // 로드가 시작되면
     bool checkUrl(const QUrl &url);
 
     void reloadUI(); // UI 를 새로고침
 
+    void createNewTabFromClass(QUrl url = QUrl()); // 새로운 탭을 생성
+
     void tabGoBack(); // Tab 뒤로 이동
     void tabGoForward(); // Tab 뒤로 이동
     void setTabIndex(int index); // Tab Index 를 설정
-    void createNewTab(QUrl url = QUrl()); // 새로운 탭을 생성
 
     void on_m_TabBack_clicked();
 
@@ -89,6 +104,8 @@ private slots:
     void on_m_AddTab_clicked();
 
     void on_m_GateBrowserIcon_clicked();
+
+    void on_m_TabButton_clicked();
 
 private:
     Ui::browser_ui *ui;
@@ -107,6 +124,8 @@ private:
     void resizeEvent(QResizeEvent* event);
 
     QWidget *center; // Center 창
+
+    QWidget *tabs; // Tabs 창
     //CustomShadowEffect *bodyShadow = new CustomShadowEffect();
 
     QPropertyAnimation *animation;
@@ -117,6 +136,9 @@ private:
     bool isKoryEnabled = false;
 
     bool isCenterShow = false;
+    bool isTabsShow = false;
+
+    int currentTab = 0;
 
     /* End */
 };

@@ -29,6 +29,18 @@ browser_ui::browser_ui(QWidget *parent) :
     ui->m_MinButton->hide();
     showMaximized();
 #endif
+
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QRect  screenGeometry = screen->geometry();
+    int height = screenGeometry.height();
+    int width = screenGeometry.width();
+
+    QSize oldSize = size();
+    resize(width / 2, height / 1.5);
+    QSize newSize = size();
+
+    QResizeEvent *event = new QResizeEvent(newSize, oldSize);
+    resizeEvent(event);
 }
 
 browser_ui::~browser_ui()
@@ -87,6 +99,7 @@ void browser_ui::createNewTab(QUrl url)
         QWebView *view = new QWebView(); // Android
     #else
         QWebEngineView *view = new QWebEngineView(); // PC
+        view->setPage(new MyWebPage());
     #endif
 
     ui->m_Tab->setCurrentIndex(ui->m_Tab->addWidget(view));
@@ -108,6 +121,8 @@ void browser_ui::createNewTab(QUrl url)
     connect(view, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
     connect(view, SIGNAL(loadProgress(int)), this, SLOT(loadProgress(int)));
     connect(view, SIGNAL(iconChanged(QIcon)), this, SLOT(iconChanged(QIcon)));
+    connect(view, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
+    connect(view->page(), SIGNAL(requestNewTab(QUrl)), this, SLOT(createNewTabFromClass(QUrl)));
     m_BrowserTabs.append(view);
 
     tabButtonManager();
@@ -125,6 +140,11 @@ move(event->globalX()-m_nMouseClick_X_Coordinate,event->globalY()-m_nMouseClick_
 }
 
 /* End */
+
+void browser_ui::createNewTabFromClass(QUrl url)
+{
+    //createNewTab(QUrl("hello"));
+}
 
 void browser_ui::on_m_CloseButton_clicked()
 {
@@ -148,6 +168,8 @@ void browser_ui::on_m_FullButton_clicked()
 
 void browser_ui::loadFinished(bool ok)
 {
+   ui->m_TabButton->setEnabled(true);
+
    if(ok)
    {
        reloadUI();
@@ -201,14 +223,7 @@ void browser_ui::on_m_TabForward_clicked()
 
 void browser_ui::on_m_UrlBar_returnPressed()
 {
-    if(checkUrl(QUrl(ui->m_UrlBar->text())))
-    {
-        m_BrowserTabs.at(ui->m_Tab->currentIndex() - 2)->load(QUrl(ui->m_UrlBar->text()));
-    }else if(strstr(ui->m_UrlBar->text().toStdString().c_str(), ".") != NULL){
-        m_BrowserTabs.at(ui->m_Tab->currentIndex() - 2)->load(QUrl("http://" + ui->m_UrlBar->text()));
-    }else{
-        m_BrowserTabs.at(ui->m_Tab->currentIndex() - 2)->load(QUrl("https://www.google.co.uk/?gws_rd=ssl#q=" + ui->m_UrlBar->text()));
-    }
+    Navigate();
 }
 
 bool browser_ui::checkUrl(const QUrl &url) {
@@ -265,13 +280,19 @@ void browser_ui::showCenter()
 {
      center = new QWidget(this);
 
-     if(!isCenterShow)
-     {
-
      center->move(0, ui->m_GateBrowserIcon->height() + ui->m_Design_Tab->height() - 5);
      center->resize(size().width() / 3, size().height() - (ui->m_GateBrowserIcon->height() + ui->m_Design_Tab->height()) + 5);
      center->setStyleSheet("background-color: rgb(120, 144, 156);");
      center->show();
+
+     QLabel *version_info = new QLabel(center);
+
+     version_info->setText(QString(BROWSER_VERSION));
+     version_info->resize(center->width(), version_info->height() / 1.5);
+     version_info->move(0, center->height() - version_info->height());
+     version_info->setAlignment(Qt::AlignHCenter);
+
+     version_info->show();
 
      animation = new QPropertyAnimation(center, "size");
 
@@ -282,22 +303,90 @@ void browser_ui::showCenter()
      animation->start();
 
      isCenterShow = true;
+}
 
-     }else{
-         animation = new QPropertyAnimation(center, "size");
+void browser_ui::closeCenter()
+{
+    animation->setDuration(300);
+    animation->setStartValue(center->size());
+    animation->setEndValue(QSize(0,0));
 
-         animation->setDuration(300);
-         animation->setStartValue(center->size());
-         animation->setEndValue(QSize(0,0));
+    animation->start();
+    center->hide();
 
-         animation->start();
-         center->hide();
+    isCenterShow = false;
+}
 
-         isCenterShow = false;
-     }
+void browser_ui::showTabs()
+{
+    currentTab = ui->m_Tab->currentIndex();
+
+    tabs = new QWidget;
+
+    tabs->resize(ui->m_Tab->size());
+
+    ui->m_Tab->setCurrentIndex(1);
+    ui->m_Tab->setCurrentWidget(tabs);
+
+    isTabsShow = true;
+
+    ui->m_UrlBar->setText("gatebrowser:tabs");
+    ui->m_TabButton->setText(tr("Tabs"));
+    ui->m_TabButton->setIcon(QIcon());
+}
+
+void browser_ui::closeTabs()
+{
+    ui->m_Tab->setCurrentIndex(currentTab);
+    isTabsShow = false;
+
+    reloadUI();
 }
 
 void browser_ui::on_m_GateBrowserIcon_clicked()
 {
-    showCenter();
+    if(isCenterShow)
+        closeCenter();
+    else
+        showCenter();
+}
+
+void browser_ui::optionalNavigate(QUrl url)
+{
+    if(url.toString() == "gatebrowser:tabs") // 탭스 페이지
+    {
+        showTabs();
+    }else if(url.toString() == "gatebrowser:store") // 스토어 페이지
+    {
+
+    }
+}
+
+void browser_ui::Navigate()
+{
+    if(checkUrl(QUrl(ui->m_UrlBar->text())))
+    {
+        m_BrowserTabs.at(ui->m_Tab->currentIndex() - 2)->load(QUrl(ui->m_UrlBar->text()));
+    }else if(strstr(ui->m_UrlBar->text().toStdString().c_str(), ".") != NULL){
+        m_BrowserTabs.at(ui->m_Tab->currentIndex() - 2)->load(QUrl("http://" + ui->m_UrlBar->text()));
+    }else if(strstr(ui->m_UrlBar->text().toStdString().c_str(), ":") != NULL){
+        optionalNavigate(QUrl(ui->m_UrlBar->text()));
+    }else{
+        m_BrowserTabs.at(ui->m_Tab->currentIndex() - 2)->load(QUrl("https://www.google.co.uk/?gws_rd=ssl#q=" + ui->m_UrlBar->text()));
+    }
+}
+
+void browser_ui::on_m_TabButton_clicked()
+{
+    if(isTabsShow)
+    {
+        closeTabs();
+    }else{
+        showTabs();
+    }
+}
+
+void browser_ui::loadStarted()
+{
+    ui->m_TabButton->setEnabled(false);
 }

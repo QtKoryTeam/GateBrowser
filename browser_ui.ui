@@ -121,6 +121,14 @@ QPushButton#m_AddApps::Pressed
 	color: rgb(255,255,255);
 	background-color: rgb(176, 190, 197, 100);
 	border:0px solid;
+}
+
+QLabel
+{
+	color: rgb(255, 255, 255);
+	background-color: rgb(255, 255, 255, 0);	
+
+	font: 13pt &quot;Nanum Gothic&quot;;
 }</string>
   </property>
   <widget class="QWidget" name="centralWidget">
